@@ -3,11 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 namespace GestaoFornecimento.Data.Context
 {
-    public class ContextGestaoFornecedores : DbContext
+    public class GestaoFornecedoresContext : DbContext
     {
-        public ContextGestaoFornecedores(DbContextOptions options) : base(options)
+        public GestaoFornecedoresContext(DbContextOptions<GestaoFornecedoresContext> options) : base(options)
         {
-
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            ChangeTracker.AutoDetectChangesEnabled = false;
         }
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
@@ -20,7 +21,7 @@ namespace GestaoFornecimento.Data.Context
                     .Where(p => p.ClrType == typeof(string))))
                 property.SetColumnType("varchar(100)");
 
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ContextGestaoFornecedores).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(GestaoFornecedoresContext).Assembly);
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
             base.OnModelCreating(modelBuilder);
         }

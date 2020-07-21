@@ -30,7 +30,7 @@ namespace GestaoFornecedores.App
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDbContext<ContextGestaoFornecedores>(options =>
+            services.AddDbContext<GestaoFornecedoresContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
