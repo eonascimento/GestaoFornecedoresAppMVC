@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using GestaoFornecimento.Data.Context;
+using GestaoFornecedores.Business.Respositories;
+using GestaoFornecedores.Data.Repositories;
 
 namespace GestaoFornecedores.App
 {
@@ -38,6 +40,11 @@ namespace GestaoFornecedores.App
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddScoped<GestaoFornecedoresContext>();
+            services.AddScoped<IProdutoRepository, ProdutoRepository>();
+            services.AddScoped<IEnderecoRepository, EnderecoRepository>();
+            services.AddScoped<IFornecedorRepository, FornecedorRepository>();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
