@@ -1,6 +1,6 @@
 using System;
 
-namespace GestaoFornecedores.App.Models
+namespace GestaoFornecedores.App.ViewModels
 {
     public class ErrorViewModel
     {
