@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using GestaoFornecimento.Data.Context;
 using GestaoFornecedores.Business.Respositories;
 using GestaoFornecedores.Data.Repositories;
+using AutoMapper;
 
 namespace GestaoFornecedores.App
 {
@@ -40,6 +41,10 @@ namespace GestaoFornecedores.App
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Latest);
 
             services.AddScoped<GestaoFornecedoresContext>();
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
