@@ -22,10 +22,10 @@ namespace GestaoFornecedores.App.ViewModels
 
         [DisplayName("Tipo")]
         public int TipoFornecedor { get; set; }
-        public EnderecoViewModels EnderecoViewModels { get; set; }
+        public EnderecoViewModels Endereco { get; set; }
 
         [DisplayName("Ativo?")]
         public bool Ativo { get; set; }
-        public IEnumerable<ProdutoVIewModel> Produtos { get; set; }
+        public IEnumerable<ProdutoViewModel> Produtos { get; set; }
     }
 }

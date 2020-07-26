@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GestaoFornecedores.App.ViewModels
 {
-    public class ProdutoVIewModel
+    public class ProdutoViewModel
     {
         [Key]
         public Guid Id { get; set; }
@@ -37,6 +37,7 @@ namespace GestaoFornecedores.App.ViewModels
 
         [DisplayName("Ativo?")]
         public bool Ativo { get; set; }
-        public FornecedorViewModel FornecedorViewModel { get; set; }
+        public FornecedorViewModel Fornecedor { get; set; }
+        public IEnumerable<FornecedorViewModel> Fornecedores { get; set; }
     }
 }

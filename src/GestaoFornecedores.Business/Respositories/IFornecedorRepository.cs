@@ -9,7 +9,7 @@ namespace GestaoFornecedores.Business.Respositories
     public interface IFornecedorRepository : IRepository<Fornecedor>
     {
         Task<Fornecedor> ObterFornecedorEndereco(Guid id);
-        Task<Fornecedor> ObterForncedorProdutosEnderecos(Guid id);
+        Task<Fornecedor> ObterFornecedorProdutosEnderecos(Guid id);
 
     }
 }

@@ -15,7 +15,7 @@ namespace GestaoFornecedores.Data.Repositories
         {
 
         }
-        public async Task<Fornecedor> ObterForncedorProdutosEnderecos(Guid id)
+        public async Task<Fornecedor> ObterFornecedorProdutosEnderecos(Guid id)
         {
             return await Db.Fornecedores.AsNoTracking()
                 .Include(c => c.Endereco)
