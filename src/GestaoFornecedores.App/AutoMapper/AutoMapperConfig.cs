@@ -13,7 +13,7 @@ namespace GestaoFornecedores.App.AutoMapper
         public AutoMapperConfig()
         {
             CreateMap<Fornecedor, FornecedorViewModel>().ReverseMap();
-            CreateMap<Produto, ProdutoVIewModel>().ReverseMap();
+            CreateMap<Produto, ProdutoViewModel>().ReverseMap();
             CreateMap<Endereco, EnderecoViewModels>().ReverseMap();
         }
     }

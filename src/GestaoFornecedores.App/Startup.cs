@@ -44,7 +44,7 @@ namespace GestaoFornecedores.App
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Latest);
+        //    services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Latest);
 
             services.AddScoped<GestaoFornecedoresContext>();
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
