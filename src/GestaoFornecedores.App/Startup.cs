@@ -19,6 +19,8 @@ using AutoMapper;
 using System.Linq.Expressions;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.DataAnnotations;
+using GestaoFornecedores.App.Extensions;
 
 namespace GestaoFornecedores.App
 {
@@ -67,6 +69,7 @@ namespace GestaoFornecedores.App
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
             services.AddScoped<IEnderecoRepository, EnderecoRepository>();
             services.AddScoped<IFornecedorRepository, FornecedorRepository>();
+            services.AddSingleton<IValidationAttributeAdapterProvider, MoedaValidationAttributeAdapterProvider>();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
