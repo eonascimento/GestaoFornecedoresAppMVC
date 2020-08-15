@@ -33,6 +33,7 @@ namespace GestaoFornecedores.App.ViewModels
 
         [Moeda]
         [Required(ErrorMessage ="O campo {0} é obrigatório")]
+        [DisplayName("Valor")]
         public decimal Valor { get; set; }
 
         [ScaffoldColumn(false)]
