@@ -6,6 +6,9 @@ using GestaoFornecedores.Business.Models;
 using GestaoFornecedores.Business.Respositories;
 using GestaoFornecedores.App.ViewModels;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace GestaoFornecedores.App.Controllers
 {
@@ -25,7 +28,7 @@ namespace GestaoFornecedores.App.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            return View(_mapper.Map<IEnumerable<ProdutoViewModel  >>(await _produtoRepository.ObterProdutosForncedores()));
+            return View(_mapper.Map<IEnumerable<ProdutoViewModel>>(await _produtoRepository.ObterProdutosForncedores()));
         }
 
         public async Task<IActionResult> Details(Guid id)
@@ -49,10 +52,40 @@ namespace GestaoFornecedores.App.Controllers
         public async Task<IActionResult> Create(ProdutoViewModel produtoViewModel)
         {
             produtoViewModel = await PopularFornecedores(produtoViewModel);
-            if (ModelState.IsValid) return View(produtoViewModel);
+            if (!ModelState.IsValid) return View(produtoViewModel);
+
+            string imgPrefixo = $"{Guid.NewGuid()}_";
+
+            if (!await UpLoadArquivo(produtoViewModel.ImagemUpload, imgPrefixo))
+                return View(produtoViewModel);
+
+            produtoViewModel.Imagem = imgPrefixo + produtoViewModel.ImagemUpload.FileName;
+
             await _produtoRepository.Adicionar(_mapper.Map<Produto>(produtoViewModel));
-            return View(produtoViewModel);
+            return RedirectToAction("Index");
         }
+
+        private async Task<bool> UpLoadArquivo(IFormFile arquivo, string imgPrefixo)
+        {
+            if (arquivo.Length <= 0) return false;
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/imagens", imgPrefixo + arquivo.FileName);
+
+            if (System.IO.File.Exists(path))
+            {
+                ModelState.AddModelError(string.Empty, "Já existe um arquivo com este nome!");
+                return false;
+            }
+
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await arquivo.CopyToAsync(stream);
+            }
+
+            return true;
+        }
+    
+
         public async Task<IActionResult> Edit(Guid id)
         {
             var produtoViewModeel = await ObterProduto(id);

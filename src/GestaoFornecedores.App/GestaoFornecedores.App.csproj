@@ -20,4 +20,8 @@
     <ProjectReference Include="..\GestaoFornecedores.Data\GestaoFornecedores.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\imagens\" />
+  </ItemGroup>
+
 </Project>
