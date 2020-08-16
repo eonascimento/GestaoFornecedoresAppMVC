@@ -21,6 +21,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using GestaoFornecedores.App.Extensions;
+using GestaoFornecedores.App.Configurations;
 
 namespace GestaoFornecedores.App
 {
@@ -34,42 +35,16 @@ namespace GestaoFornecedores.App
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-
             services.AddDbContext<GestaoFornecedoresContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentityConfiguration(Configuration);
             services.AddControllersWithViews();
-            services.AddRazorPages();
-
             services.AddAutoMapper(typeof(Startup));
-
-            services.AddMvc(options =>
-            {
-                options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((x, y) => "O valor preenchido é inválido para este campo.");
-                options.ModelBindingMessageProvider.SetMissingBindRequiredValueAccessor(x => "Este campo precisa ser preenchido.");
-                options.ModelBindingMessageProvider.SetMissingKeyOrValueAccessor(() => "Este campo precisa ser preenchido.");
-                options.ModelBindingMessageProvider.SetMissingRequestBodyRequiredValueAccessor(() => "É necessário que o body na requisição não esteja vazio.");
-                options.ModelBindingMessageProvider.SetNonPropertyAttemptedValueIsInvalidAccessor(x => "O valor preenchido é inválido para este campo.");
-                options.ModelBindingMessageProvider.SetNonPropertyUnknownValueIsInvalidAccessor(() => "O valor preenchido é inválido para este campo.");
-                options.ModelBindingMessageProvider.SetNonPropertyValueMustBeANumberAccessor(() => "O campo deve ser numérico");
-                options.ModelBindingMessageProvider.SetUnknownValueIsInvalidAccessor(x => "O valor preenchido é inválido para este campo.");
-                options.ModelBindingMessageProvider.SetValueIsInvalidAccessor(x => "O valor preenchido é inválido para este campo.");
-                options.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(x => "O campo deve ser numérico.");
-                options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(x => "Este campo precisa ser preenchido.");
-            }).SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Latest);
-
+            services.AddMvcConfiguration();
             services.AddRazorPages();
-            services.AddScoped<GestaoFornecedoresContext>();
-            services.AddScoped<IProdutoRepository, ProdutoRepository>();
-            services.AddScoped<IEnderecoRepository, EnderecoRepository>();
-            services.AddScoped<IFornecedorRepository, FornecedorRepository>();
-            services.AddSingleton<IValidationAttributeAdapterProvider, MoedaValidationAttributeAdapterProvider>();
+            services.ResolveDependencies();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
