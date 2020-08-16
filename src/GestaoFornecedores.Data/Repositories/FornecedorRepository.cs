@@ -18,6 +18,7 @@ namespace GestaoFornecedores.Data.Repositories
         public async Task<Fornecedor> ObterFornecedorProdutosEnderecos(Guid id)
         {
             return await Db.Fornecedores.AsNoTracking()
+                .Include(c => c.Produtos)
                 .Include(c => c.Endereco)
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
@@ -25,7 +26,6 @@ namespace GestaoFornecedores.Data.Repositories
         public async Task<Fornecedor> ObterFornecedorEndereco(Guid id)
         {
             return await Db.Fornecedores.AsNoTracking()
-                .Include(c => c.Produtos)
                 .Include(c => c.Endereco)
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
