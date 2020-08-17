@@ -1,5 +1,5 @@
 ﻿using GestaoFornecedores.App.Extensions;
-using GestaoFornecedores.Business.Respositories;
+using GestaoFornecedores.Business.Interfaces.Respositories;
 using GestaoFornecedores.Data.Repositories;
 using GestaoFornecimento.Data.Context;
 using Microsoft.AspNetCore.Mvc.DataAnnotations;

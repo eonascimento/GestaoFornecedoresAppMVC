@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestaoFornecedores.Business.Respositories
+namespace GestaoFornecedores.Business.Interfaces.Respositories
 {
     public interface IRepository<TEntity> : IDisposable where TEntity : Entity
     {

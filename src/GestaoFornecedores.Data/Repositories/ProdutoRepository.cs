@@ -1,5 +1,5 @@
 ﻿using GestaoFornecedores.Business.Models;
-using GestaoFornecedores.Business.Respositories;
+using GestaoFornecedores.Business.Interfaces.Respositories;
 using GestaoFornecimento.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System;

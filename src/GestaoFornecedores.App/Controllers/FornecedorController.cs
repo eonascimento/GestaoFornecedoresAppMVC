@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using GestaoFornecedores.App.ViewModels;
 using GestaoFornecedores.Business.Models;
-using GestaoFornecedores.Business.Respositories;
+using GestaoFornecedores.Business.Interfaces.Respositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 

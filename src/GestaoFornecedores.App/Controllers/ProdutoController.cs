@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using GestaoFornecedores.Business.Models;
-using GestaoFornecedores.Business.Respositories;
+using GestaoFornecedores.Business.Interfaces.Respositories;
 using GestaoFornecedores.App.ViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;

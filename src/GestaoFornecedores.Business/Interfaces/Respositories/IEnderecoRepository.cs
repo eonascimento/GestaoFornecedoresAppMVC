@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestaoFornecedores.Business.Respositories
+namespace GestaoFornecedores.Business.Interfaces.Respositories
 {
     public interface IEnderecoRepository : IRepository<Endereco>
     {
