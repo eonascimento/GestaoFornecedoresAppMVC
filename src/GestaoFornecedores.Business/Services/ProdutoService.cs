@@ -1,4 +1,5 @@
-﻿using GestaoFornecedores.Business.Interfaces.Respositories;
+﻿using GestaoFornecedores.Business.Interfaces;
+using GestaoFornecedores.Business.Interfaces.Respositories;
 using GestaoFornecedores.Business.Interfaces.Services;
 using GestaoFornecedores.Business.Models;
 using GestaoFornecedores.Business.Models.Validations;
@@ -10,7 +11,8 @@ namespace GestaoFornecedores.Business.Services
     public class ProdutoService : BaseService, IProdutoService
     {
         private readonly IProdutoRepository _produtoRepository;
-        public ProdutoService(IProdutoRepository produtoRepository)
+        public ProdutoService(IProdutoRepository produtoRepository,
+                              INotificador notificador) : base(notificador)
         {
             _produtoRepository = produtoRepository;
         }
