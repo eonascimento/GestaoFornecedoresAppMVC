@@ -1,5 +1,6 @@
 ﻿using GestaoFornecedores.Business.Interfaces.Services;
 using GestaoFornecedores.Business.Models;
+using GestaoFornecedores.Business.Models.Validations;
 using System;
 using System.Threading.Tasks;
 
@@ -7,14 +8,14 @@ namespace GestaoFornecedores.Business.Services
 {
     public class ProdutoService : BaseService, IProdutoService
     {
-        public Task Adicionar(Produto produto)
+        public async Task Adicionar(Produto produto)
         {
-            throw new NotImplementedException();
+            if (!ExecutarValidacao(new ProdutoValidation(), produto)) return;
         }
 
-        public Task Atualizar(Produto produto)
+        public async Task Atualizar(Produto produto)
         {
-            throw new NotImplementedException();
+            if (!ExecutarValidacao(new ProdutoValidation(), produto)) return;
         }
 
         public Task Remover(Guid id)

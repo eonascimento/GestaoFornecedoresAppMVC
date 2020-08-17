@@ -13,14 +13,14 @@ namespace GestaoFornecedores.Business.Services
             if (!ExecutarValidacao(new FornecedorValidation(), fornecedor)) return;
         }
 
-        public Task Atualizar(Fornecedor fornecedor)
+        public async Task Atualizar(Fornecedor fornecedor)
         {
-            throw new NotImplementedException();
+            if (!ExecutarValidacao(new FornecedorValidation(), fornecedor)) return;
         }
 
-        public Task AtualizarEndereco(Endereco endereco)
+        public async Task AtualizarEndereco(Endereco endereco)
         {
-            throw new NotImplementedException();
+            if (!ExecutarValidacao(new EnderecoValidation(), endereco)) return;
         }
 
         public Task Remover(Guid id)
