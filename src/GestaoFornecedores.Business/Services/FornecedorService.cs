@@ -25,7 +25,7 @@ namespace GestaoFornecedores.Business.Services
         public async Task Adicionar(Fornecedor fornecedor)
         {
             if (!ExecutarValidacao(new FornecedorValidation(), fornecedor)
-                && !ExecutarValidacao(new EnderecoValidation(), fornecedor.Endereco)) return;
+                || !ExecutarValidacao(new EnderecoValidation(), fornecedor.Endereco)) return;
 
             if( _fornecedorRepository.Buscar(f => f.Documento == fornecedor.Documento).Result.Any())
             {
@@ -46,7 +46,7 @@ namespace GestaoFornecedores.Business.Services
                 return;
             }
 
-            await _fornecedorRepository.Adicionar(fornecedor);
+            await _fornecedorRepository.Atualizar(fornecedor);
         }
 
         public async Task AtualizarEndereco(Endereco endereco)
@@ -62,6 +62,13 @@ namespace GestaoFornecedores.Business.Services
                 Notificar("O fornecedor possui produtos cadastrados!");
                 return;
             }
+            var endereco = await _enderecoRepository.ObterEnderecoPorFornecedor(id);
+
+            if (endereco != null)
+            {
+                await _enderecoRepository.Remover(endereco.Id);
+            }
+
             await _fornecedorRepository.Remover(id);
         }
         public void Dispose()

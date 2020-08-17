@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using GestaoFornecedores.Business.Interfaces.Services;
+using GestaoFornecedores.Business.Interfaces;
 
 namespace GestaoFornecedores.App.Controllers
 {
@@ -23,7 +24,8 @@ namespace GestaoFornecedores.App.Controllers
         public ProdutoController(IProdutoRepository produtoRepository,
                                  IFornecedorRepository fornecedorRepository,
                                  IProdutoService produtoService,
-                                 IMapper mapper)
+                                 INotificador notificador,
+                                 IMapper mapper) : base(notificador)
         {
             _produtoRepository = produtoRepository;
             _fornecedorRepository = fornecedorRepository;
@@ -71,6 +73,9 @@ namespace GestaoFornecedores.App.Controllers
             produtoViewModel.Imagem = imgPrefixo + produtoViewModel.ImagemUpload.FileName;
 
             await _produtoService.Adicionar(_mapper.Map<Produto>(produtoViewModel));
+
+            if (!OperacaoValida()) return View(produtoViewModel);
+
             return RedirectToAction("Index");
         }
 
@@ -117,7 +122,7 @@ namespace GestaoFornecedores.App.Controllers
             produtoViewModel.Imagem = produtoAtualizacao.Imagem;
             if (!ModelState.IsValid) return View(produtoViewModel);
 
-            if(produtoViewModel.Imagem != null)
+            if(produtoViewModel.ImagemUpload != null)
             {
                 string imgPrefixo = $"{Guid.NewGuid()}_";
                 if (!await UpLoadArquivo(produtoViewModel.ImagemUpload, imgPrefixo))
@@ -131,6 +136,10 @@ namespace GestaoFornecedores.App.Controllers
             produtoAtualizacao.Ativo = produtoViewModel.Ativo;
 
             await _produtoService.Atualizar(_mapper.Map<Produto>(produtoAtualizacao));
+
+            if (!OperacaoValida()) return View(produtoViewModel);
+
+            TempData["Sucesso"] = "Produto excluido com Sucesso!";
 
             return RedirectToAction("Index");
         }
@@ -151,6 +160,8 @@ namespace GestaoFornecedores.App.Controllers
             var produto = await ObterProduto(id);
             if (produto == null) return NotFound();
             await _produtoService.Remover(id);
+
+            if (!OperacaoValida()) return View(produto);
             return RedirectToAction("Index");
         }
 

@@ -9,6 +9,7 @@ using GestaoFornecedores.Business.Interfaces.Respositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using GestaoFornecedores.Business.Interfaces.Services;
+using GestaoFornecedores.Business.Interfaces;
 
 namespace GestaoFornecedores.App.Controllers
 {
@@ -18,7 +19,11 @@ namespace GestaoFornecedores.App.Controllers
         private readonly IFornecedorService _fornecedorService;
         private readonly IMapper _mapper;
 
-        public FornecedorController(IFornecedorRepository fornecedorRepository, IMapper mapper, IFornecedorService fornecedorService)
+        public FornecedorController(
+            IFornecedorRepository fornecedorRepository,
+            IFornecedorService fornecedorService,
+            IMapper mapper,
+            INotificador notificador) : base(notificador)
         {
             _fornecedorRepository = fornecedorRepository;
             _fornecedorService = fornecedorService;
@@ -54,8 +59,13 @@ namespace GestaoFornecedores.App.Controllers
         public async Task<IActionResult> Create(FornecedorViewModel fornecedorViewModel)
         {
             if (!ModelState.IsValid) return View(fornecedorViewModel);
+
             var fornecedor = _mapper.Map<Fornecedor>(fornecedorViewModel);
-            await _fornecedorRepository.Adicionar(fornecedor);
+
+            await _fornecedorService.Adicionar(fornecedor);
+
+            if (!OperacaoValida()) return View(fornecedorViewModel);
+
             return RedirectToAction("Index");
         }
 
@@ -76,9 +86,15 @@ namespace GestaoFornecedores.App.Controllers
         public async Task<IActionResult> Edit(Guid id, FornecedorViewModel fornecedorViewModel)
         {
             if (id != fornecedorViewModel.Id) return NotFound();
+
             if (!ModelState.IsValid) return View(fornecedorViewModel);
+
             var fornecedor = _mapper.Map<Fornecedor>(fornecedorViewModel);
-            await _fornecedorRepository.Atualizar(fornecedor);
+
+            await _fornecedorService.Atualizar(fornecedor);
+
+            if (!OperacaoValida()) return View(await ObterFornecedorProdutoEndereco(id));
+
             return RedirectToAction("Index");
         }
 
@@ -98,12 +114,15 @@ namespace GestaoFornecedores.App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var fornecedorViewModel = await ObterFornecedorEndereco(id);
-            if (fornecedorViewModel == null)
+            var fornecedor = await ObterFornecedorEndereco(id);
+            if (fornecedor == null)
             {
                 return NotFound();
             }
-            await _fornecedorRepository.Remover(id);
+            await _fornecedorService.Remover(id);
+
+            if (!OperacaoValida()) return View(fornecedor);
+
             return RedirectToAction("Index");
         }
 
@@ -140,6 +159,8 @@ namespace GestaoFornecedores.App.Controllers
             ModelState.Remove("Documento");
             if (!ModelState.IsValid) return PartialView("_AtualizarEndereco", fornecedorViewModel);
             await _fornecedorService.AtualizarEndereco(_mapper.Map<Endereco>(fornecedorViewModel.Endereco));
+
+            if (!OperacaoValida()) return PartialView("_AtualizarEndereco", fornecedorViewModel);
 
             var url = Url.Action("ObterEndereco", "Fornecedor", new { id = fornecedorViewModel.Endereco.FornecedorId });
             return Json(new { success = true, url });
