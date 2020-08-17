@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace GestaoFornecedores.App.Extensions
 {
-    public class SumaryViewComponent : ViewComponent
+    public class SummaryViewComponent : ViewComponent
     {
         private readonly INotificador _notificador;
-        public SumaryViewComponent(INotificador notificador)
+        public SummaryViewComponent(INotificador notificador)
         {
             _notificador = notificador;
         }

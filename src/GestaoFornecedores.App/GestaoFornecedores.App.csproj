@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Shared\Components\Summary\" />
     <Folder Include="wwwroot\imagens\" />
   </ItemGroup>
 
