@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GestaoFornecedores.Business.Interfaces.Services
 {
-    public interface IProdutoService
+    public interface IProdutoService : IDisposable
     {
         Task Adicionar(Produto produto);
         Task Atualizar(Produto produto);
