@@ -9,6 +9,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using GestaoFornecedores.Business.Interfaces.Services;
 
 namespace GestaoFornecedores.App.Controllers
 {
@@ -16,14 +17,17 @@ namespace GestaoFornecedores.App.Controllers
     {
         private readonly IProdutoRepository _produtoRepository;
         private readonly IFornecedorRepository _fornecedorRepository;
+        private readonly IProdutoService _produtoService;
         private readonly IMapper _mapper;
 
         public ProdutoController(IProdutoRepository produtoRepository,
                                  IFornecedorRepository fornecedorRepository,
+                                 IProdutoService produtoService,
                                  IMapper mapper)
         {
             _produtoRepository = produtoRepository;
             _fornecedorRepository = fornecedorRepository;
+            _produtoService = produtoService;
             _mapper = mapper;
         }
 
@@ -66,7 +70,7 @@ namespace GestaoFornecedores.App.Controllers
 
             produtoViewModel.Imagem = imgPrefixo + produtoViewModel.ImagemUpload.FileName;
 
-            await _produtoRepository.Adicionar(_mapper.Map<Produto>(produtoViewModel));
+            await _produtoService.Adicionar(_mapper.Map<Produto>(produtoViewModel));
             return RedirectToAction("Index");
         }
 
@@ -126,7 +130,7 @@ namespace GestaoFornecedores.App.Controllers
             produtoAtualizacao.Valor = produtoViewModel.Valor;
             produtoAtualizacao.Ativo = produtoViewModel.Ativo;
 
-            await _produtoRepository.Atualizar(_mapper.Map<Produto>(produtoAtualizacao));
+            await _produtoService.Atualizar(_mapper.Map<Produto>(produtoAtualizacao));
 
             return RedirectToAction("Index");
         }
@@ -146,7 +150,7 @@ namespace GestaoFornecedores.App.Controllers
         {
             var produto = await ObterProduto(id);
             if (produto == null) return NotFound();
-            await _produtoRepository.Remover(id);
+            await _produtoService.Remover(id);
             return RedirectToAction("Index");
         }
 

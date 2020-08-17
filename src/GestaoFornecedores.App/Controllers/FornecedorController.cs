@@ -8,19 +8,20 @@ using GestaoFornecedores.Business.Models;
 using GestaoFornecedores.Business.Interfaces.Respositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using GestaoFornecedores.Business.Interfaces.Services;
 
 namespace GestaoFornecedores.App.Controllers
 {
     public class FornecedorController : BaseController
     {
         private readonly IFornecedorRepository _fornecedorRepository;
-        private readonly IEnderecoRepository _enderecoRepository;
+        private readonly IFornecedorService _fornecedorService;
         private readonly IMapper _mapper;
 
-        public FornecedorController(IFornecedorRepository fornecedorRepository, IMapper mapper, IEnderecoRepository enderecoRepository)
+        public FornecedorController(IFornecedorRepository fornecedorRepository, IMapper mapper, IFornecedorService fornecedorService)
         {
             _fornecedorRepository = fornecedorRepository;
-            _enderecoRepository = enderecoRepository;
+            _fornecedorService = fornecedorService;
             _mapper = mapper;
         }
 
@@ -138,7 +139,7 @@ namespace GestaoFornecedores.App.Controllers
             ModelState.Remove("Nome");
             ModelState.Remove("Documento");
             if (!ModelState.IsValid) return PartialView("_AtualizarEndereco", fornecedorViewModel);
-            await _enderecoRepository.Atualizar(_mapper.Map<Endereco>(fornecedorViewModel.Endereco));
+            await _fornecedorService.AtualizarEndereco(_mapper.Map<Endereco>(fornecedorViewModel.Endereco));
 
             var url = Url.Action("ObterEndereco", "Fornecedor", new { id = fornecedorViewModel.Endereco.FornecedorId });
             return Json(new { success = true, url });
