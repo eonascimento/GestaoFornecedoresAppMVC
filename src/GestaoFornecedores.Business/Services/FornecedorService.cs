@@ -1,5 +1,6 @@
 ﻿using GestaoFornecedores.Business.Interfaces.Services;
 using GestaoFornecedores.Business.Models;
+using GestaoFornecedores.Business.Models.Validations;
 using System;
 using System.Threading.Tasks;
 
@@ -7,9 +8,9 @@ namespace GestaoFornecedores.Business.Services
 {
     public class FornecedorService : BaseService, IFornecedorService
     {
-        public Task Adicionar(Fornecedor fornecedor)
+        public async Task Adicionar(Fornecedor fornecedor)
         {
-            throw new NotImplementedException();
+            if (!ExecutarValidacao(new FornecedorValidation(), fornecedor)) return;
         }
 
         public Task Atualizar(Fornecedor fornecedor)
