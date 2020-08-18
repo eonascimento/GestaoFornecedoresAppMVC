@@ -4,21 +4,21 @@ using System;
 
 namespace GestaoFornecedores.App.Extensions
 {
-    [HtmlTargetElement("*", Attributes = "supress-by-claim-name")]
-    [HtmlTargetElement("*", Attributes = "supress-by-claim-value")]
-    public class SupressElementByClaimTagHelper : TagHelper
+    [HtmlTargetElement("a", Attributes = "disable-by-claim-name")]
+    [HtmlTargetElement("a", Attributes = "disable-by-claim-value")]
+    public class DisableLinkByClaimTagHelper : TagHelper
     {
         private readonly IHttpContextAccessor _httpAccessor;
 
-        public SupressElementByClaimTagHelper(IHttpContextAccessor httpAccessor)
+        public DisableLinkByClaimTagHelper(IHttpContextAccessor httpAccessor)
         {
             _httpAccessor = httpAccessor;
         }
 
-        [HtmlAttributeName("supress-by-claim-name")]
+        [HtmlAttributeName("disable-by-claim-name")]
         public string IdentityClaimName { get; set; }
 
-        [HtmlAttributeName("supress-by-claim-value")]
+        [HtmlAttributeName("disable-by-claim-value")]
         public string IdentityClaimValue { get; set; }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
@@ -32,7 +32,9 @@ namespace GestaoFornecedores.App.Extensions
 
             if (temAcesso) return;
 
-            output.SuppressOutput();
+            output.Attributes.RemoveAll("href");
+            output.Attributes.Add(new TagHelperAttribute("style", "cursor: not-allowed"));
+            output.Attributes.Add(new TagHelperAttribute("title", "Você não tem permissão."));
         }
     }
 }

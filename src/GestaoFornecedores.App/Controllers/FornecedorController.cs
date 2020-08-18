@@ -77,7 +77,7 @@ namespace GestaoFornecedores.App.Controllers
         }
 
         [ClaimsAuthorize("Fornecedor", "Editar")]
-        [Route("editer-fornecedor/{id:guid}")]
+        [Route("editar-fornecedor/{id:guid}")]
         public async Task<IActionResult> Edit(Guid id)
         {
             var fornecedorViewModel = await ObterFornecedorProdutoEndereco(id);
@@ -89,7 +89,7 @@ namespace GestaoFornecedores.App.Controllers
         }
 
         [ClaimsAuthorize("Fornecedor", "Editar")]
-        [Route("editer-fornecedor/{id:guid}")]
+        [Route("editar-fornecedor/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, FornecedorViewModel fornecedorViewModel)
