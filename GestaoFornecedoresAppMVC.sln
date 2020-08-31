@@ -19,6 +19,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataBase", "DataBase", "{D9
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "GestaoFornecedores.DataBase", "src\GestaoFornecedores.DataBase\GestaoFornecedores.DataBase\GestaoFornecedores.DataBase.sqlproj", "{867A9213-CCD5-4494-8799-E87C5F602F62}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{39205A89-E78C-4F15-91BD-1894CCA306F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestaoFornecedores.Test", "src\GestaoFornecedores.Test\GestaoFornecedores.Test.csproj", "{D29BED51-2D0C-437E-919F-EC40605BECA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +47,10 @@ Global
 		{867A9213-CCD5-4494-8799-E87C5F602F62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{867A9213-CCD5-4494-8799-E87C5F602F62}.Release|Any CPU.Build.0 = Release|Any CPU
 		{867A9213-CCD5-4494-8799-E87C5F602F62}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{D29BED51-2D0C-437E-919F-EC40605BECA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D29BED51-2D0C-437E-919F-EC40605BECA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D29BED51-2D0C-437E-919F-EC40605BECA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D29BED51-2D0C-437E-919F-EC40605BECA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +60,7 @@ Global
 		{017A6350-57B1-407B-93AD-A6C1E9096894} = {552768CF-B097-4DEB-84B3-3523CEACB32F}
 		{88D3CE3F-D335-4F27-945D-48E14342E85B} = {F253AD14-5106-4C6D-B69F-7F3B2F0B7043}
 		{867A9213-CCD5-4494-8799-E87C5F602F62} = {D9C7F6E7-EDBB-4F3B-99A4-4583D347F35B}
+		{D29BED51-2D0C-437E-919F-EC40605BECA0} = {39205A89-E78C-4F15-91BD-1894CCA306F5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5CE7A3B0-F75B-4340-A4E2-B059DA229BBC}
